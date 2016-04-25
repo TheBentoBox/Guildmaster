@@ -63,7 +63,11 @@ void UGrabber::SetupInputComponent()
 // Finds first physics body in reach
 const FHitResult UGrabber::GetFirstPhysicsBodyInReach()
 {
-	/// Setup query parameters for use withing the line trace below
+	/// Query object of what types of collision bodies we're looking for
+	FCollisionObjectQueryParams ObjectTypesToQueryFor = FCollisionObjectQueryParams(ECollisionChannel::ECC_Destructible);
+	ObjectTypesToQueryFor.AddObjectTypesToQuery(ECollisionChannel::ECC_PhysicsBody);
+
+	/// Setup collision ignore/query params
 	FCollisionQueryParams TraceParameters(FName(TEXT("")), false, Owner);
 
 	/// Line-trace (AKA ray-cast) out to reach distance
@@ -72,7 +76,7 @@ const FHitResult UGrabber::GetFirstPhysicsBodyInReach()
 		OUT HitResult,
 		GetReachLineStart(),
 		GetReachLineEnd(),
-		FCollisionObjectQueryParams(ECollisionChannel::ECC_PhysicsBody),
+		ObjectTypesToQueryFor,
 		TraceParameters
 		);
 
