@@ -23,7 +23,7 @@ public:
 
 private:
 	// How far the pawn can grab objects from in cm
-	float Reach = 100.0f;
+	float Reach = 200.0f;
 
 	// The actor this component is attached to
 	AActor* Owner = nullptr;

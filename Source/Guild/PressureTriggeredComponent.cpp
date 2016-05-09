@@ -30,7 +30,7 @@ void UPressureTriggeredComponent::BeginPlay()
 
 	// Log error if the pressure plate is missing
 	if (!PressurePlate) {
-		UE_LOG(LogTemp, Warning, TEXT("%s OpenDoor component has no pressure plate assigned"), *Owner->GetName())
+		UE_LOG(LogTemp, Warning, TEXT("%s PressureTriggered component has no pressure plate assigned"), *Owner->GetName())
 	}
 }
 

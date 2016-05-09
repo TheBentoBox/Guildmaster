@@ -22,7 +22,6 @@ void UGrabber::BeginPlay()
 	/// Get owning actor this instance is attached to
 	/// We use the owner a lot so it's better to have an easy reference
 	Owner = GetOwner();
-
 	FindAttachedPhysicsHandle();
 	SetupInputComponent();
 }
@@ -129,29 +128,11 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 // Gets the point at the start of our reach, returned as an FVector
 FVector UGrabber::GetReachLineStart()
 {
-	/// Get player view point
-	/// Needed because it will be the starting point of our reach line
-	FVector PlayerViewPointLocation;
-	FRotator PlayerViewPointRotation;
-	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(
-		OUT PlayerViewPointLocation,
-		OUT PlayerViewPointRotation
-		);
-
-	return PlayerViewPointLocation;
+	return GetWorld()->GetFirstPlayerController()->PlayerCameraManager->GetCameraLocation();
 }
 
 // Gets the point at the end of our reach, returned as an FVector
 FVector UGrabber::GetReachLineEnd()
 {
-	/// Get player view point
-	/// It is the start of the reach line, so it's necessary to calculate the end
-	FVector PlayerViewPointLocation;
-	FRotator PlayerViewPointRotation;
-	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(
-		OUT PlayerViewPointLocation,
-		OUT PlayerViewPointRotation
-		);
-
-	return PlayerViewPointLocation + (PlayerViewPointRotation.Vector() * Reach);
+	return GetWorld()->GetFirstPlayerController()->PlayerCameraManager->GetCameraLocation() + (GetWorld()->GetFirstPlayerController()->GetActorForwardVector() * Reach);
 }
